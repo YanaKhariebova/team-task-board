@@ -1,86 +1,104 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-const TaskForm = ({ onAddTask }) => {
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    assignee: "",
-    status: "open",
-  });
-
-  const handleChange = (e) => {
-    setForm(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+export default function TaskForm({ addTask }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [assignee, setAssignee] = useState("");
+  const [status, setStatus] = useState("open");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.title.trim()) return;
+    if (!title.trim()) {
+      alert("Bitte gib einen Titel für die Aufgabe ein!");
+      return;
+    }
 
-    onAddTask({
-      id: Date.now(),
-      ...form,
-    });
+    const newTask = {
+      id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+      title: title.trim(),
+      description: description.trim(),
+      assignee: assignee.trim() || "Nicht zugewiesen",
+      status: status,
+    };
 
-    setForm({
-      title: "",
-      description: "",
-      assignee: "",
-      status: "open",
-    });
+    addTask(newTask);
+
+    setTitle("");
+    setDescription("");
+    setAssignee("");
+    setStatus("open");
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white text-gray-700 p-3 rounded-lg shadow-md flex flex-col gap-2"
+      className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto my-6 border border-gray-200"
     >
-      <input
-        name="title"
-        value={form.title}
-        onChange={handleChange}
-        placeholder="Title"
-        className="border p-2 rounded w-full"
-      />
+      <h3 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
+        Neue Aufgabe hinzufügen
+      </h3>
 
-      <textarea
-        name="description"
-        value={form.description}
-        onChange={handleChange}
-        placeholder="Description"
-        className="border p-2 rounded w-full"
-      />
+      <div className="mb-4">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
+          Titel <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="z. B. Design erstellen"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+        />
+      </div>
 
-      <input
-        name="assignee"
-        value={form.assignee}
-        onChange={handleChange}
-        placeholder="Assignee"
-        className="border bg-gray-100/50 p-2 rounded w-full"
-      />
+      <div className="mb-4">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
+          Beschreibung
+        </label>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Was ist zu tun?..."
+          rows="3"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm resize-none"
+        />
+      </div>
 
-      <select
-        name="status"
-        value={form.status}
-        onChange={handleChange}
-        className="border p-2 rounded w-full"
-      >
-        <option value="open">Open</option>
-        <option value="in-progress">In Progress</option>
-        <option value="done">Done</option>
-      </select>
+      <div className="mb-4">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
+          Verantwortliche Person
+        </label>
+        <input
+          type="text"
+          value={assignee}
+          onChange={(e) => setAssignee(e.target.value)}
+          placeholder="Name des Teammitglieds"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+        />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
+          Status
+        </label>
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+        >
+          <option value="open">Offen</option>
+          <option value="in-progress">In Bearbeitung</option>
+          <option value="done">Erledigt</option>
+        </select>
+      </div>
 
       <button
         type="submit"
-        className="bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-500"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
-        Add Task
+        Aufgabe hinzufügen
       </button>
     </form>
   );
-};
-
-export default TaskForm;
+}

@@ -4,8 +4,8 @@ export function PublicFooter() {
       <footer className="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
         <aside>
           <p>
-            Copyright © {new Date().getFullYear()} - All right reserved by Group
-            4
+            Copyright (c) {new Date().getFullYear()} - All right reserved by
+            Group 4
           </p>
         </aside>
       </footer>

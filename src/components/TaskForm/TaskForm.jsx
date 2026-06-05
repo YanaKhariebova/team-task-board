@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function TaskForm({ addTask }) {
   const [title, setTitle] = useState("");
@@ -33,14 +33,14 @@ export default function TaskForm({ addTask }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto my-6 border border-gray-200"
+      className="bg-base-200 p-6 rounded-lg shadow-md max-w-md mx-auto my-6 border border-gray-200"
     >
-      <h3 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
+      <h3 className="text-xl font-bold mb-4 border-b pb-2">
         Neue Aufgabe hinzufügen
       </h3>
 
       <div className="mb-4">
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label className="block text-sm font-semibold mb-1">
           Titel <span className="text-red-500">*</span>
         </label>
         <input
@@ -53,9 +53,7 @@ export default function TaskForm({ addTask }) {
       </div>
 
       <div className="mb-4">
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
-          Beschreibung
-        </label>
+        <label className="block text-sm font-semibold mb-1">Beschreibung</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -66,7 +64,7 @@ export default function TaskForm({ addTask }) {
       </div>
 
       <div className="mb-4">
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label className="block text-sm font-semibold  mb-1">
           Verantwortliche Person
         </label>
         <input
@@ -79,13 +77,11 @@ export default function TaskForm({ addTask }) {
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
-          Status
-        </label>
+        <label className="block text-sm font-semibold mb-1">Status</label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md bg-base-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
         >
           <option value="open">Offen</option>
           <option value="in-progress">In Bearbeitung</option>

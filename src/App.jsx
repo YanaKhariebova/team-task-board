@@ -1,17 +1,12 @@
 import { useState } from "react";
 import "./App.css";
-import TaskForm from "./components/TaskForm/TaskForm";
+import TaskBoard from "./components/TaskBoard/task.board";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const addTask = (task) => {
-    setTasks((prev) => [...prev, task]);
-  };
   return (
     <>
-      <TaskForm addTask={addTask} />
+      <TaskBoard />
     </>
   );
 }
-
 export default App;
